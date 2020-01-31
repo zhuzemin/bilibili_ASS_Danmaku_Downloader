@@ -6,7 +6,7 @@
 // @include     http://bangumi.bilibili.com/movie/*
 // @include     https://www.bilibili.com/video/av*
 // @include     https://www.bilibili.com/bangumi/play/*
-// @version     1.24
+// @version     1.3
 // @grant       GM_addStyle
 // @grant       GM_xmlhttpRequest
 // @run-at      document-start
@@ -659,12 +659,27 @@ var getCid = function (callback) {
   src = null,
   aid = null;
   try {
-    aid = document.querySelector('a.av-link').innerText.toLowerCase().replace('av', '');
+    /*aid = document.querySelector('a.av-link').innerText.toLowerCase().replace('av', '');
     src = document.querySelector('#bofqi iframe, #moviebofqi iframe').src.replace(/^.*\?/, '');
-    cid = Number(src.match(/cid=(\d+)/) [1]);
+    cid = Number(src.match(/cid=(\d+)/) [1]);*/
+      if(window.location.href.includes("bangumi")) {
+          cid = unsafeWindow.__INITIAL_STATE__.epInfo.cid;
+      }
+      else if(window.location.href.includes("av")) {
+          var EpisodeMatched = window.location.href.match(/\?p=(\d{1,2})/);
+          if (EpisodeMatched != null) {
+              var EpisodeNum = parseInt(EpisodeMatched[1]);
+              cid = unsafeWindow.__INITIAL_STATE__.videoData.pages[EpisodeNum - 1].cid;
+          }
+          else {
+              cid = unsafeWindow.__INITIAL_STATE__.videoData.pages[0].cid;
+
+          }
+      }
+      setTimeout(callback, 0, cid || undefined);
   } catch (e) {
   }
-  if (!aid) try {
+  /*if (!aid) try {
     aid = window.location.href.match(/av(\d*)/) [1];
   } catch (e) {
   }
@@ -681,7 +696,7 @@ var getCid = function (callback) {
       'onload': function (resp) {
         try {
           cid = Number(resp.responseText.match(/"cid":(\d*)/) [1]);
-        } 
+        }
         catch (e) {
         }
         setTimeout(callback, 0, cid || undefined);
@@ -693,7 +708,7 @@ var getCid = function (callback) {
     }
   } else {
     setTimeout(getCid, 100, callback);
-  }
+  }*/
 };
 // 下载的主程序
 var mina = function (cid0) {
