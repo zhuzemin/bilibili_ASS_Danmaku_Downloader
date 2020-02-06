@@ -1,7 +1,11 @@
 // ==UserScript==
 // @name        bilibili ASS Danmaku Downloader
+// @name:zh-CN         bilibili ASS Danmaku Downloader
+// @name:zh-TW         bilibili ASS Danmaku Downloader
 // @namespace   https://github.com/tiansh, https://github.com/zhuzemin
 // @description 以 ASS 格式下载 bilibili 的弹幕
+// @description:zh-TW  以 ASS 格式下载 bilibili 的弹幕
+// @description:zh-CN  以 ASS 格式下载 bilibili 的弹幕
 // @include     http://www.bilibili.com/video/av*
 // @include     http://bangumi.bilibili.com/movie/*
 // @include     https://www.bilibili.com/video/av*
